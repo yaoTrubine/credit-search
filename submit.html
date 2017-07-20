@@ -15,7 +15,7 @@
         <form action="" id="form_2">
             <div class="form-group">
                 <label for="select">*姓名</label>
-                <input id="info" class="form-control" type="text" name="info" placeholder="请输入姓名">
+                <input id="info" class="form-control" type="text" name="name" placeholder="请输入姓名">
             </div>
             <div class="form-group">
                 <label for="select">*微信号</label>
@@ -38,8 +38,8 @@
     
     <script>
     var form_2 = document.getElementById('form_2'),
-
         request = new XMLHttpRequest();
+
         form_2.addEventListener('submit',function(e){
             e.preventDefault();
             for(let i = 0;i < e.target.length - 1;i++){
@@ -53,6 +53,12 @@
             request.onreadystatechange = function(){
                 if(request.readyState == 4){
                     if(request.status == 200){
+                        var data = JSON.parse(request.responseText);
+                        if(data.success){
+                            document.getElementById('notice').innerHTML = '<p class="text-success">'+data.msg+'</p>';
+                        }else{
+                            document.getElementById('notice').innerHTML = '<p class="text-danger">'+data.msg+'</p>';
+                        }
                         console.log('success');
                     }else{
                         console.log('failed');
