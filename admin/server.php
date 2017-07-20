@@ -1,7 +1,13 @@
 <?php
+
+//处理各种ajax请求
+
+
 require_once 'connect.fun.php';
 
 header("Content-Type: text/html;charset=utf-8"); 
+
+// print_r($_GET);
 
 $conn = connect_mysql();
 
@@ -11,8 +17,11 @@ mysql_select_db('credit',$conn);
 // $sql = "SELECT * FROM cheater WHERE '".$_POST['select']."' LIKE '%".$_POST['info']."%'";
 // $sql2 = "SELECT * FROM cheater";
 
-//搜索sql
-$sql2 = "SELECT * FROM cheater WHERE ".$_POST['select']." LIKE '%".$_POST['info']."%'";
+
+
+
+//用来搜索的sql
+$sql2 = "SELECT * FROM cheater WHERE ".$_GET['select']." LIKE '%".$_GET['info']."%'";
 
 
 
@@ -21,6 +30,7 @@ $result = mysql_query($sql2);
     
 
 if(mysql_num_rows($result) == 0){
+    //query得不到结果显示没有
     echo '<h2>没有查询结果</h2>';
 }else{
     echo '<table class="table">';
@@ -31,6 +41,7 @@ if(mysql_num_rows($result) == 0){
     echo    '<th>护照号</th>';
     echo '</tr>';
     echo '</table>';
+    //把每条数据输出
     while($row = mysql_fetch_assoc($result)){
         echo '<table class="table">';
         echo '<tr>';
@@ -42,9 +53,6 @@ if(mysql_num_rows($result) == 0){
         echo '</table>';
     }
 }
-
-
-
 
 
 

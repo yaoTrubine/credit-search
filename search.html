@@ -21,7 +21,7 @@
                     <option value="name">姓名</option>
                     <option value="wechaid">微信号</option>
                     <option value="phone">电话</option>
-                    <option value="number">护照号</option>
+                    <option value="passport">护照号</option>
                 </select>
             </div>
             <div class="form-group">
@@ -38,19 +38,20 @@
     </div>
     <script>
         var form = document.getElementById('form_1'),
-            info = document.getElementById('info'),
             request = new XMLHttpRequest();
         
         form.addEventListener('submit',function(e){
             
             e.preventDefault();
+
+            //获取第二个input的值
             if(e.target[1].value == ''){
                 document.getElementById('notice').innerHTML = '<h2>查询信息必填</h2>';
                 return false;
             }
-            request.open('post','admin/server.php');
-            var data = new FormData(form);
-            request.send(data);
+            //请求
+            request.open('get','admin/server.php?select='+document.getElementById('select').value+"&info="+document.getElementById('info').value);
+            request.send();
             request.onreadystatechange = function(){
                 if(request.readyState == 4){
                     if(request.status == 200){
