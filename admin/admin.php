@@ -3,7 +3,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
     <link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.2/css/bootstrap.min.css">
@@ -12,7 +12,7 @@
     <div class="container">
         <table class="table">
             <tr>
-                <!--<th>ID</th>-->
+                <th>ID</th>
                 <th>姓名</th>
                 <th>微信号</th>
                 <th>电话</th>
@@ -25,17 +25,25 @@
     $conn = connect_mysql();
     mysql_query("set names 'utf8'"); 
     mysql_select_db('credit',$conn);
-    $sql = "SELECT * FROM cheater";
+
+    //传入页码
+    $page = $_GET['page'];
+    $pageSize = ($page - 1)*10;
+    $url = $_SERVER['PHP_SELF'];
+    $sql = "SELECT * FROM cheater LIMIT $pageSize,10";
     if(isset($_GET['id'])){
         //删除sql
         $delsql = "DELETE FROM cheater WHERE id = '".$_GET['id']."'";
         mysql_query($delsql);
     }
+
     $result = mysql_query($sql);
+
     while ($row = mysql_fetch_assoc($result)) {
         echo "<tr>";  
         //打印出$row这一行  
 ?>
+        <td><?php echo $row['id'] ?></td>
         <td><?php echo $row['name'] ?></td>
         <td><?php echo $row['wechaid'] ?></td>
         <td><?php echo $row['phone'] ?></td>
@@ -46,6 +54,13 @@
     } 
 ?>
         </table>
+<?php
+    mysql_free_result($result);
+    mysql_close($conn);
+    $page_banner = "<a href=$url?page=".($page-1).">上一页</a>";
+    $page_banner .= "<a href=$url?page=".($page+1).">下一页</a>";
+    echo $page_banner;
+?>
     </div>
 
 </body>

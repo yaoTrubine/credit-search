@@ -82,6 +82,7 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
         }else{
             echo '{"success":false,"msg":"信息保存失败！"}';
         }
+        mysql_free_result($result_2);
     }
 }
 
@@ -89,5 +90,5 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
 
 
 
-mysql_close();
+mysql_close($conn);
 
