@@ -12,8 +12,9 @@
         .btn-default{margin-right:10px;margin-left:10px;}
         label{padding-right:10px;}
         .title button {float:right;margin:10px;}
-        .page{text-align:center;}
-        .page a,.page p,.page form{float:left;}
+        form{display:inline;margin-left:20px;}
+        #input_jump{width:50px;padding: 6px 12px;box-sizing:border-box;border-radius:10px;outline:none;}
+
     </style>
      <script language="JavaScript" type="text/javascript">
     //导出execl
@@ -169,10 +170,10 @@
         $page_banner .= "<li><a href=$url?page={$total_pages}>尾页</a></li>";
     }
     
-    $page_banner .= "<p>共{$total_pages}页</p>";
+    $page_banner .= "<span>共{$total_pages}页</span>";
     $page_banner .= "<form class='form-inline' action='admin.php' method='get'>";
-    $page_banner .= "<input type='text' id='input_jump' name='page' placeholder='页数'>";
-    $page_banner .= "<input class='btn btn-info' type='submit' value='提交'>";
+    $page_banner .= "到第<input type='text' id='input_jump' name='page' placeholder='页'>";
+    $page_banner .= "页<input class='btn btn-info' type='submit' value='确定'>";
     $page_banner .= "</form>";
     $page_banner .= "<a class='btn btn-default' href=$url?page=all>显示全部</a></ul></nav>";
     echo $page_banner;
